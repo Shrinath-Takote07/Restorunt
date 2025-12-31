@@ -32,7 +32,7 @@ import {
 
 // restorunt-virid.vercel.app
 
-const API_URL = "restorunt-virid.vercel.app";
+const API_URL = "https://restorunt-virid.vercel.app"
 
 
 // https://restorunt-ten.vercel.app/
