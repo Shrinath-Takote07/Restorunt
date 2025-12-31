@@ -26,6 +26,9 @@ import {
   FileText,
 } from "lucide-react";
 
+// function T() {
+const API_URL = "http://localhost:5000";
+
 function T() {
   const [cart, setCart] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
@@ -57,7 +60,7 @@ function T() {
 
   // Fetch food items
   const fetchfoodItems = () => {
-    fetch("http://localhost:5000/api/menu")
+    fetch(`${API_URL}/api/menu`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch menu");
         return res.json();
@@ -77,7 +80,7 @@ function T() {
   const fetchOrderHistory = () => {
     setIsLoading(true);
 
-    fetch("http://localhost:5000/api/hist")
+    fetch(`${API_URL}/api/hist`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch orders");
         return res.json();
@@ -107,7 +110,7 @@ function T() {
     }
 
     setIsLoading(true);
-    fetch("http://localhost:5000/api/hist", {
+    fetch(`${API_URL}/api/hist`, {
       method: "DELETE",
     })
       .then((res) => {
@@ -309,7 +312,7 @@ function T() {
   const confirmOrder = () => {
     setOrderPlaced(true);
 
-    fetch("http://localhost:5000/api/orders", {
+    fetch(`${API_URL}/api/orders`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
