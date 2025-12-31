@@ -29,7 +29,10 @@ import {
 // function T() {
 // const API_URL = "http://localhost:5000";
 
-const API_URL = "https://restorunt-ten.vercel.app";
+
+// restorunt-virid.vercel.app
+
+const API_URL = "restorunt-virid.vercel.app";
 
 
 // https://restorunt-ten.vercel.app/
