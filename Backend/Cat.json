@@ -1,0 +1,104 @@
+[
+  {
+    "id": "ORD-00123",
+    "orderId": "00123",
+    "date": "2024-01-15T12:30:00",
+    "items": 3,
+    "itemNames": ["Margherita Pizza", "Garlic Bread", "Tiramisu"],
+    "itemPrices": [24.99, 8.99, 9.99],
+    "itemQuantities": [1, 2, 1],
+    "totalAmount": 52.96,
+    "status": "completed",
+    "paymentMethod": "Credit Card"
+  },
+  {
+    "id": "ORD-00124",
+    "orderId": "00124",
+    "date": "2024-01-15T18:45:00",
+    "items": 2,
+    "itemNames": ["Pasta Carbonara", "Caesar Salad"],
+    "itemPrices": [18.99, 12.99],
+    "itemQuantities": [1, 2],
+    "totalAmount": 44.97,
+    "status": "cancelled",
+    "paymentMethod": "PayPal"
+  },
+  {
+    "id": "ORD-00125",
+    "orderId": "00125",
+    "date": "2024-01-14T19:30:00",
+    "items": 3,
+    "itemNames": ["Grilled Salmon", "Mashed Potatoes", "Cheesecake"],
+    "itemPrices": [28.99, 6.99, 8.99],
+    "itemQuantities": [2, 2, 1],
+    "totalAmount": 80.95,
+    "status": "completed",
+    "paymentMethod": "Cash"
+  },
+  {
+    "id": "ORD-00126",
+    "orderId": "00126",
+    "date": "2024-01-14T13:15:00",
+    "items": 4,
+    "itemNames": ["Burger Deluxe", "Fries", "Coke", "Chocolate Cake"],
+    "itemPrices": [15.99, 4.99, 2.99, 8.99],
+    "itemQuantities": [2, 2, 2, 1],
+    "totalAmount": 67.5,
+    "status": "completed",
+    "paymentMethod": "Credit Card"
+  },
+  {
+    "id": "ORD-00127",
+    "orderId": "00127",
+    "date": "2024-01-13T20:00:00",
+    "items": 2,
+    "itemNames": ["Chicken Wings", "Onion Rings"],
+    "itemPrices": [18.99, 8.99],
+    "itemQuantities": [1, 2],
+    "totalAmount": 35.99,
+    "status": "completed",
+    "paymentMethod": "Debit Card"
+  },
+  {
+    "id": "ORD-00128",
+    "orderId": "00128",
+    "date": "2024-01-12T19:15:00",
+    "items": 5,
+    "itemNames": [
+      "Sushi Platter",
+      "Miso Soup",
+      "Edamame",
+      "Green Tea",
+      "Mochi Ice Cream"
+    ],
+    "itemPrices": [45.99, 4.99, 5.99, 3.99, 6.99],
+    "itemQuantities": [1, 2, 2, 2, 4],
+    "totalAmount": 112.45,
+    "status": "completed",
+    "paymentMethod": "Credit Card"
+  },
+  {
+    "id": "ORD-00129",
+    "orderId": "00129",
+    "date": "2024-01-12T14:30:00",
+    "items": 3,
+    "itemNames": ["Steak Frites", "House Salad", "Wine"],
+    "itemPrices": [32.99, 9.99, 24.99],
+    "itemQuantities": [1, 2, 1],
+    "totalAmount": 77.96,
+    "status": "completed",
+    "paymentMethod": "Credit Card"
+  },
+  {
+    "id": "ORD-00130",
+    "orderId": "00130",
+    "date": "2024-01-11T21:00:00",
+    "items": 2,
+    "itemNames": ["Fish & Chips", "Beer"],
+    "itemPrices": [16.99, 6.99],
+    "itemQuantities": [3, 2],
+    "totalAmount": 64.95,
+    "status": "completed",
+    "paymentMethod": "Cash"
+  }
+]
