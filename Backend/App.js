@@ -12,8 +12,20 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors());
+// app.use(cors());
 app.use(express.json());
+// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// import cors from "cors";
+
+app.use(cors({
+  origin: "https://restorunt-vtah.vercel.app", // frontend domain
+  methods: ["GET", "POST", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+}));
+
+
+
+// /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Port & Mongo URI
 const PORT = process.env.PORT || 8080;
