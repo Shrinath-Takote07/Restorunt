@@ -32,7 +32,7 @@ import {
 
 // restorunt-virid.vercel.app
 
-const API_URL = "https://restorunt-virid.vercel.app"
+// const API_URL = "https://restorunt-virid.vercel.app"
 
 
 // https://restorunt-ten.vercel.app/
@@ -68,7 +68,7 @@ function T() {
 
   // Fetch food items
   const fetchfoodItems = () => {
-    fetch(`${API_URL}/api/menu`)
+    fetch(`https://restorunt-virid.vercel.app/api/menu`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch menu");
         return res.json();
@@ -88,7 +88,7 @@ function T() {
   const fetchOrderHistory = () => {
     setIsLoading(true);
 
-    fetch(`${API_URL}/api/hist`)
+    fetch(`https://restorunt-virid.vercel.app/api/hist`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch orders");
         return res.json();
@@ -118,7 +118,7 @@ function T() {
     }
 
     setIsLoading(true);
-    fetch(`${API_URL}/api/hist`, {
+    fetch(`https://restorunt-virid.vercel.app/api/hist`, {
       method: "DELETE",
     })
       .then((res) => {
