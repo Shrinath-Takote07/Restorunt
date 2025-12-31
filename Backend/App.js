@@ -2,41 +2,36 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
-import Item from "./models/Menu.js";
 import path from "path";
+import Item from "./models/Menu.js";
 import Order from "./models/Order.js";
 
-// Load environment variables
 dotenv.config();
-
 const app = express();
 
 // Middleware
-// app.use(cors());
 app.use(express.json());
-// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// import cors from "cors";
 
+// Allow both local dev and deployed frontend
+const allowedOrigins = [
+  "http://localhost:5173",              // Vite dev server
+  "https://restorunt-vtah.vercel.app"   // deployed frontend
+];
 app.use(cors({
-  origin: "https://restorunt-vtah.vercel.app", // frontend domain
+  origin: allowedOrigins,
   methods: ["GET", "POST", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
-
-
-// /////////////////////////////////////////////////////////////////////////////////////////////////////
-
 // Port & Mongo URI
 const PORT = process.env.PORT || 8080;
 const URI = process.env.MONGODBURI;
-
 const _dirname = path.resolve();
 
 // Connect to MongoDB
 const connectDB = async () => {
   try {
-    console.log("Mongo URI:", URI); // Debug
+    console.log("Mongo URI:", URI);
     await mongoose.connect(URI);
     console.log("✅ MongoDB connected successfully");
   } catch (error) {
@@ -46,13 +41,10 @@ const connectDB = async () => {
 };
 connectDB();
 
-// Root route
-// app.get("/", (req, res) => {
-//   res.send("API is Running");
-// });
+// -------------------- ROUTES --------------------
 
 // GET all menus
-app.get("/api/menu", async (req, res) => {
+app.get("/api/menus", async (req, res) => {
   try {
     const menus = await Item.find();
     console.log("📦 All menus requested");
@@ -63,52 +55,48 @@ app.get("/api/menu", async (req, res) => {
   }
 });
 
-// GET single product by custom numeric ID
+// GET single menu item by numeric ID
 app.get("/api/menus/:id", async (req, res) => {
   try {
     const productId = parseInt(req.params.id, 10);
     const item = await Item.findOne({ id: productId });
 
-    console.log(`🔍 Product requested with ID: ${req.params.id}`);
-
     if (item) {
       res.status(200).json(item);
     } else {
-      res.status(404).json({ error: "Product not found" });
+      res.status(404).json({ error: "Menu item not found" });
     }
   } catch (error) {
-    console.error("❌ Error fetching product:", error.message);
+    console.error("❌ Error fetching menu item:", error.message);
     res.status(500).json({ error: "Server error" });
   }
 });
 
-// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Hostory
-app.get("/api/hist", async (req, res) => {
+// GET all orders (history)
+app.get("/api/orders", async (req, res) => {
   try {
-    const hists = await Order.find();
-    console.log("📦 All hists requested");
-    res.status(200).json(hists);
+    const orders = await Order.find();
+    console.log("📦 All orders requested");
+    res.status(200).json(orders);
   } catch (error) {
-    console.error("❌ Error fetching hists:", error.message);
+    console.error("❌ Error fetching orders:", error.message);
     res.status(500).json({ error: "Server error" });
   }
 });
 
-// GET single product by custom numeric ID
-app.get("/api/hists/:id", async (req, res) => {
+// GET single order by numeric ID
+app.get("/api/orders/:id", async (req, res) => {
   try {
-    const productId = parseInt(req.params.id, 10);
-    const order = await Order.findOne({ id: productId });
-
-    console.log(`🔍 Product requested with ID: ${req.params.id}`);
+    const orderId = parseInt(req.params.id, 10);
+    const order = await Order.findOne({ id: orderId });
 
     if (order) {
       res.status(200).json(order);
     } else {
-      res.status(404).json({ error: "Product not found" });
+      res.status(404).json({ error: "Order not found" });
     }
   } catch (error) {
-    console.error("❌ Error fetching product:", error.message);
+    console.error("❌ Error fetching order:", error.message);
     res.status(500).json({ error: "Server error" });
   }
 });
@@ -116,12 +104,10 @@ app.get("/api/hists/:id", async (req, res) => {
 // POST new order
 app.post("/api/orders", async (req, res) => {
   try {
-    const { orderId, items, subtotal, tax, deliveryFee, grandTotal, date } =
-      req.body;
+    const { orderId, items, grandTotal } = req.body;
 
-    // Transform data to match Schema
     const newOrder = new Order({
-      id: orderId, // using orderId as the unique id
+      id: orderId,
       orderId,
       date: new Date(),
       items: items.reduce((acc, item) => acc + item.quantity, 0),
@@ -130,7 +116,7 @@ app.post("/api/orders", async (req, res) => {
       itemQuantities: items.map((item) => item.quantity),
       totalAmount: parseFloat(grandTotal),
       status: "pending",
-      paymentMethod: "Credit Card", // Defaulting for now as per UI
+      paymentMethod: "Credit Card",
     });
 
     const savedOrder = await newOrder.save();
@@ -143,7 +129,7 @@ app.post("/api/orders", async (req, res) => {
 });
 
 // DELETE all orders
-app.delete("/api/hist", async (req, res) => {
+app.delete("/api/orders", async (req, res) => {
   try {
     await Order.deleteMany({});
     console.log("🗑️ All orders deleted");
@@ -154,15 +140,14 @@ app.delete("/api/hist", async (req, res) => {
   }
 });
 
-// Serve frontend static files
+// -------------------- FRONTEND --------------------
 app.use(express.static(path.join(_dirname, "/my-project/dist")));
 
-// Catch-all route to serve index.html (SPA support)
-// Use regex to avoid "Missing parameter name" error with newer path-to-regexp versions
 app.get(/^(?!\/api).+/, (req, res) => {
-  res.sendFile(path.resolve(_dirname, "my-project", "dist", "index.html"))
+  res.sendFile(path.resolve(_dirname, "my-project", "dist", "index.html"));
 });
-// Start server
+
+// -------------------- START SERVER --------------------
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`🚀 App is listening on http://localhost:${PORT}`);
 });
